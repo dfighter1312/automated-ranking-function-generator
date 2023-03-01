@@ -1,0 +1,15 @@
+File,Class,Function,Strategy
+../termination-suite/nuTerm-advantage/Java/DynamiteEx2Vars/DynamiteEx2Vars.jar,DynamiteEx2Vars,loop,anticorr_sumofrelu2
+../termination-suite/nuTerm-advantage/Java/DynamiteExample/DynamiteExample.jar,DynamiteExample,loop,anticorr_sumofrelu2
+../termination-suite/nuTerm-advantage/Java/DynamiteExampleX4/DynamiteExampleX4.jar,DynamiteExampleX4,loop,anticorr_sumofrelu2
+../termination-suite/nuTerm-advantage/Java/DynExUpTo2VarsConj/DynExUpTo2VarsConj.jar,DynExUpTo2VarsConj,loop,anticorr_sumofrelu2
+../termination-suite/nuTerm-advantage/Java/DynExUpTo2VarsDisj/DynExUpTo2VarsDisj.jar,DynExUpTo2VarsDisj,loop,anticorr_sumofrelu2
+../termination-suite/nuTerm-advantage/Java/DynExUpTo3VarsDisj/DynExUpTo3VarsDisj.jar,DynExUpTo3VarsDisj,loop,anticorr_sumofrelu2
+../termination-suite/nuTerm-advantage/Java/DynExUpTo4VarsDisj/DynExUpTo4VarsDisj.jar,DynExUpTo4VarsDisj,loop,anticorr_sumofrelu2
+../termination-suite/nuTerm-advantage/Java/MultDisj/MultDisj.jar,MultDisj,loop,anticorr_sumofrelu2
+../termination-suite/nuTerm-advantage/Java/Poly2VarsCondBreak/Poly2VarsCondBreak.jar,Poly2VarsCondBreak,loop,anticorr_sumofrelu2
+../termination-suite/nuTerm-advantage/Java/PolyClosingIn/PolyClosingIn.jar,PolyClosingIn,loop,anticorr_sumofrelu2
+../termination-suite/nuTerm-advantage/Java/Square2VarsDisj/Square2VarsDisj.jar,Square2VarsDisj,loop,anticorr_sumofrelu2
+../termination-suite/nuTerm-advantage/Java/SquareDisj2Vars/SquareDisj2Vars.jar,SquareDisj2Vars,loop,anticorr_sumofrelu2
+../termination-suite/nuTerm-advantage/Java/TwoPol4VarsConj/TwoPol4VarsConj.jar,TwoPol4VarsConj,loop,anticorr_sumofrelu2
+../termination-suite/nuTerm-advantage/Java/TwoPol4VarsDisj/TwoPol4VarsDisj.jar,TwoPol4VarsDisj,loop,anticorr_sumofrelu2

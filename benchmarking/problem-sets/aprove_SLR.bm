@@ -1,0 +1,85 @@
+# ===================================
+# - single loop linear
+# ===================================
+termination-suite/Aprove_09/GCD5/GCD5.jar GCD5 gcd single_linear_with_relu
+termination-suite/Aprove_09/DivWithoutMinus/DivWithoutMinus.jar DivWithoutMinus div single_linear_with_relu
+termination-suite/Aprove_09/LogBuiltIn/LogBuiltIn.jar LogBuiltIn log single_linear_with_relu
+termination-suite/Aprove_09/McCarthyIterative/McCarthyIterative.jar McCarthyIterative run single_linear_with_relu
+# TODO multiple main functions for tracing
+termination-suite/Aprove_09/MinusBuiltIn/MinusBuiltIn.jar MinusBuiltIn loop single_linear_with_relu
+termination-suite/Aprove_09/PastaA4/PastaA4.jar PastaA4 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaA5/PastaA5.jar PastaA5 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaA6/PastaA6.jar PastaA6 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaA7/PastaA7.jar PastaA7 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB2/PastaB2.jar PastaB2 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB6/PastaB6.jar PastaB6 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB7/PastaB7.jar PastaB7 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB10/PastaB10.jar PastaB10 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB11/PastaB11.jar PastaB11 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB1/PastaB1.jar PastaB1 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB5/PastaB5.jar PastaB5 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaA9/PastaA9.jar PastaA9 loop single_linear_with_relu
+termination-suite/Aprove_09/CountUpRound/CountUpRound.jar CountUpRound loop single_linear_with_relu
+
+
+# -- supporting invar
+termination-suite/Aprove_09/PastaB8/PastaB8.jar PastaB8 loop single_linear_with_relu
+# needs invariant x >= 0, while precondition imposes x > 0
+
+# -- nondeterminism; We do not support this
+# ('termination-suite/Aprove_09/PastaC9/PastaC9.jar', 'PastaC9', 'loop', None),
+# ('termination-suite/Aprove_09/PastaC10/PastaC10.jar', 'PastaC10', 'loop', None),
+# ('termination-suite/Aprove_09/PastaC11/PastaC11.jar', 'PastaC11', 'loop', None),
+
+# ===================================
+# - two loops linear lexicographic
+# ===================================
+
+termination-suite/Aprove_09/PastaA1/PastaA1.jar PastaA1 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB16/PastaB16.jar PastaB16 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB17/PastaB17.jar PastaB17 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaC1/PastaC1.jar PastaC1 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaC2/PastaC2.jar PastaC2 loop single_linear_with_relu
+
+# -- supporting invar
+termination-suite/Aprove_09/PastaB18/PastaB18.jar PastaB18 loop single_linear_with_relu
+
+# ===================================
+# - single loop non-linear
+# ===================================
+termination-suite/Aprove_09/PastaB12/PastaB12.jar PastaB12 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB13/PastaB13.jar PastaB13 loop single_linear_with_relu
+# abs(x - y)
+termination-suite/Aprove_09/PastaA10/PastaA10.jar PastaA10 loop single_linear_with_relu 
+termination-suite/Aprove_09/PastaC3/PastaC3.jar PastaC3 loop single_linear_with_relu
+# A solution is y - min{x,z}, or Relu(y-x) + Relu (y-z)
+
+# -- supporting invar
+termination-suite/Aprove_09/PastaC5/PastaC5.jar PastaC5 loop single_linear_with_relu
+
+# ===================================
+# - unknown strategy
+# ===================================
+termination-suite/Aprove_09/Round3/Round3.jar Round3 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB14/PastaB14.jar PastaB14 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB15/PastaB15.jar PastaB15 loop single_linear_with_relu
+
+# ===================================
+# - Pathological cases (Drawbacks discussed in submitted paper)
+# ===================================
+# argument changes at each iteration
+termination-suite/Aprove_09/PlusSwap/PlusSwap.jar PlusSwap loop single_linear_with_relu
+# This loop executes exactly once. the while can basically be replaced by if (x > y) and it does a swap.
+termination-suite/Aprove_09/PastaB4/PastaB4.jar PastaB4 loop single_linear_with_relu
+# Maybe we require an invariant or something. I think the ranking function is close to k - j but it gets interupted by the first loop condition when j is >=100
+termination-suite/Aprove_09/PastaC7/PastaC7.jar PastaC7 loop single_linear_with_relu
+# one iteration only
+termination-suite/Aprove_09/PastaB3/PastaB3.jar PastaB3 loop single_linear_with_relu  
+# - model not expressive enough
+# Usually the trace is simply too short, i.e. 3/4 long
+
+# TODO Checking is stuck
+# ('termination-suite/Aprove_09/LogIterative/LogIterative.jar', 'LogIterative', 'log', None),
+    
+    
+  

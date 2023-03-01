@@ -1,0 +1,9 @@
+sympy
+pyjnius
+datetime
+pandas
+numpy
+tqdm
+termcolor
+psutil
+torch==1.11.0

@@ -1,0 +1,53 @@
+
+termination-suite/Aprove_09/GCD5/GCD5.jar GCD5 gcd anticorr_sumofrelu2
+termination-suite/Aprove_09/LogBuiltIn/LogBuiltIn.jar LogBuiltIn log anticorr_sumofrelu2
+termination-suite/Aprove_09/McCarthyIterative/McCarthyIterative.jar McCarthyIterative run anticorr_sumofrelu2
+
+termination-suite/Aprove_09/MinusBuiltIn/MinusBuiltIn.jar MinusBuiltIn loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaA4/PastaA4.jar PastaA4 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaA5/PastaA5.jar PastaA5 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaA6/PastaA6.jar PastaA6 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaA7/PastaA7.jar PastaA7 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaB2/PastaB2.jar PastaB2 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaB6/PastaB6.jar PastaB6 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaB7/PastaB7.jar PastaB7 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaB10/PastaB10.jar PastaB10 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaB11/PastaB11.jar PastaB11 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaB1/PastaB1.jar PastaB1 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaB5/PastaB5.jar PastaB5 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaA9/PastaA9.jar PastaA9 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/CountUpRound/CountUpRound.jar CountUpRound loop anticorr_sumofrelu2
+
+termination-suite/Aprove_09/DivMinus/DivMinus.jar DivMinus div anticorr_sumofrelu2
+
+termination-suite/Aprove_09/PastaA1/PastaA1.jar PastaA1 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaB16/PastaB16.jar PastaB16 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaB17/PastaB17.jar PastaB17 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaC1/PastaC1.jar PastaC1 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaC2/PastaC2.jar PastaC2 loop anticorr_sumofrelu2
+
+# termination-suite/Aprove_09/PastaB18/PastaB18.jar PastaB18 loop anticorr_sumofrelu2
+
+termination-suite/Aprove_09/PastaB12/PastaB12.jar PastaB12 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaB13/PastaB13.jar PastaB13 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaA10/PastaA10.jar PastaA10 loop anticorr_sumofrelu2 
+termination-suite/Aprove_09/PastaC3/PastaC3.jar PastaC3 loop anticorr_sumofrelu2
+
+termination-suite/Aprove_09/LogIterative/LogIterative.jar LogIterative log anticorr_sumofrelu2
+
+# Not terminating
+termination-suite/Aprove_09/LogMult/LogMult.jar LogMult log anticorr_sumofrelu2
+
+termination-suite/Aprove_09/PastaC5/PastaC5.jar PastaC5 loop anticorr_sumofrelu2
+
+termination-suite/Aprove_09/Round3/Round3.jar Round3 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaB14/PastaB14.jar PastaB14 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaB15/PastaB15.jar PastaB15 loop anticorr_sumofrelu2
+
+
+termination-suite/Aprove_09/PlusSwap/PlusSwap.jar PlusSwap loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaB4/PastaB4.jar PastaB4 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaC7/PastaC7.jar PastaC7 loop anticorr_sumofrelu2
+termination-suite/Aprove_09/PastaB3/PastaB3.jar PastaB3 loop anticorr_sumofrelu2  
+
+  

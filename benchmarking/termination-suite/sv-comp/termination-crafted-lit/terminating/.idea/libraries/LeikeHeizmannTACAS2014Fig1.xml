@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="LeikeHeizmannTACAS2014Fig1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/LeikeHeizmann-TACAS2014-Fig1/LeikeHeizmannTACAS2014Fig1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

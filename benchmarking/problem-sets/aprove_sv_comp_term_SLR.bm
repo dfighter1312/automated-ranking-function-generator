@@ -1,0 +1,213 @@
+# ===================================
+# - single loop linear
+# ===================================
+termination-suite/Aprove_09/GCD5/GCD5.jar GCD5 gcd single_linear_with_relu
+termination-suite/Aprove_09/DivWithoutMinus/DivWithoutMinus.jar DivWithoutMinus div single_linear_with_relu
+termination-suite/Aprove_09/LogBuiltIn/LogBuiltIn.jar LogBuiltIn log single_linear_with_relu
+termination-suite/Aprove_09/McCarthyIterative/McCarthyIterative.jar McCarthyIterative run single_linear_with_relu
+# TODO multiple main functions for tracing
+termination-suite/Aprove_09/MinusBuiltIn/MinusBuiltIn.jar MinusBuiltIn loop single_linear_with_relu
+termination-suite/Aprove_09/PastaA4/PastaA4.jar PastaA4 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaA5/PastaA5.jar PastaA5 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaA6/PastaA6.jar PastaA6 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaA7/PastaA7.jar PastaA7 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB2/PastaB2.jar PastaB2 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB6/PastaB6.jar PastaB6 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB7/PastaB7.jar PastaB7 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB10/PastaB10.jar PastaB10 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB11/PastaB11.jar PastaB11 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB1/PastaB1.jar PastaB1 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB5/PastaB5.jar PastaB5 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaA9/PastaA9.jar PastaA9 loop single_linear_with_relu
+termination-suite/Aprove_09/CountUpRound/CountUpRound.jar CountUpRound loop single_linear_with_relu
+
+
+# -- supporting invar
+termination-suite/Aprove_09/PastaB8/PastaB8.jar PastaB8 loop single_linear_with_relu
+# needs invariant x >= 0, while precondition imposes x > 0
+
+# -- nondeterminism; We do not support this
+# ('termination-suite/Aprove_09/PastaC9/PastaC9.jar', 'PastaC9', 'loop', None),
+# ('termination-suite/Aprove_09/PastaC10/PastaC10.jar', 'PastaC10', 'loop', None),
+# ('termination-suite/Aprove_09/PastaC11/PastaC11.jar', 'PastaC11', 'loop', None),
+
+# ===================================
+# - two loops linear lexicographic
+# ===================================
+
+termination-suite/Aprove_09/PastaA1/PastaA1.jar PastaA1 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB16/PastaB16.jar PastaB16 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB17/PastaB17.jar PastaB17 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaC1/PastaC1.jar PastaC1 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaC2/PastaC2.jar PastaC2 loop single_linear_with_relu
+
+# -- supporting invar
+termination-suite/Aprove_09/PastaB18/PastaB18.jar PastaB18 loop single_linear_with_relu
+
+# ===================================
+# - single loop non-linear
+# ===================================
+termination-suite/Aprove_09/PastaB12/PastaB12.jar PastaB12 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB13/PastaB13.jar PastaB13 loop single_linear_with_relu
+# abs(x - y)
+termination-suite/Aprove_09/PastaA10/PastaA10.jar PastaA10 loop single_linear_with_relu 
+termination-suite/Aprove_09/PastaC3/PastaC3.jar PastaC3 loop single_linear_with_relu
+# A solution is y - min{x,z}, or Relu(y-x) + Relu (y-z)
+
+# -- supporting invar
+termination-suite/Aprove_09/PastaC5/PastaC5.jar PastaC5 loop single_linear_with_relu
+
+# ===================================
+# - unknown strategy
+# ===================================
+termination-suite/Aprove_09/Round3/Round3.jar Round3 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB14/PastaB14.jar PastaB14 loop single_linear_with_relu
+termination-suite/Aprove_09/PastaB15/PastaB15.jar PastaB15 loop single_linear_with_relu
+
+# ===================================
+# - Pathological cases (Drawbacks discussed in submitted paper)
+# ===================================
+# argument changes at each iteration
+termination-suite/Aprove_09/PlusSwap/PlusSwap.jar PlusSwap loop single_linear_with_relu
+# This loop executes exactly once. the while can basically be replaced by if (x > y) and it does a swap.
+termination-suite/Aprove_09/PastaB4/PastaB4.jar PastaB4 loop single_linear_with_relu
+# Maybe we require an invariant or something. I think the ranking function is close to k - j but it gets interupted by the first loop condition when j is >=100
+termination-suite/Aprove_09/PastaC7/PastaC7.jar PastaC7 loop single_linear_with_relu
+# one iteration only
+termination-suite/Aprove_09/PastaB3/PastaB3.jar PastaB3 loop single_linear_with_relu  
+# - model not expressive enough
+# Usually the trace is simply too short, i.e. 3/4 long
+
+# TODO Checking is stuck
+# ('termination-suite/Aprove_09/LogIterative/LogIterative.jar', 'LogIterative', 'log', None),
+    
+    
+  
+####### SV_COMP
+
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-speedpldi4/AliasDarteFeautrierGonnordSAS2010speedpldi4.jar AliasDarteFeautrierGonnordSAS2010speedpldi4 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/ChawdharyCookGulwaniSagivYang-ESOP2008-easy1/ChawdharyCookGulwaniSagivYangESOP2008easy1.jar ChawdharyCookGulwaniSagivYangESOP2008easy1 loop anticorr_sumofrelu
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-easy1/AliasDarteFeautrierGonnordSAS2010easy1.jar AliasDarteFeautrierGonnordSAS2010easy1 loop anticorr_sumofrelu
+termination-suite/termination-crafted-lit/terminating/BradleyMannaSipma-CAV2005-Fig1/BradleyMannaSipmaCAV2005Fig1.jar BradleyMannaSipmaCAV2005Fig1 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/LeikeHeizmann-TACAS2014-Ex7/LeikeHeizmannTACAS2014Ex7.jar LeikeHeizmannTACAS2014Ex7 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-easy2-1/AliasDarteFeautrierGonnordSAS2010easy21.jar AliasDarteFeautrierGonnordSAS2010easy21 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex2.10/ChenFlurMukhopadhyaySAS2012Ex210.jar ChenFlurMukhopadhyaySAS2012Ex210 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex3.08/ChenFlurMukhopadhyaySAS2012Ex308.jar ChenFlurMukhopadhyaySAS2012Ex308 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/aviad/Aviad.jar Aviad loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-ndecr/AliasDarteFeautrierGonnordSAS2010ndecr.jar AliasDarteFeautrierGonnordSAS2010ndecr loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/GulavaniGulwani-CAV2008-Fig1c/GulavaniGulwaniCAV2008Fig1c.jar GulavaniGulwaniCAV2008Fig1c loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/HeizmannHoenickeLeikePodelski-ATVA2013-Fig8/HeizmannHoenickeLeikePodelskiATVA2013Fig8.jar HeizmannHoenickeLeikePodelskiATVA2013Fig8 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/CookSeeZuleger-TACAS2013-Fig8a-modified/CookSeeZulegerTACAS2013Fig8amodified.jar CookSeeZulegerTACAS2013Fig8amodified loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/CookSeeZuleger-TACAS2013-Fig8a/CookSeeZulegerTACAS2013Fig8a.jar CookSeeZulegerTACAS2013Fig8a loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/genady/Genady.jar Genady loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/HeizmannHoenickeLeikePodelski-ATVA2013-Fig9/HeizmannHoenickeLeikePodelskiATVA2013Fig9.jar HeizmannHoenickeLeikePodelskiATVA2013Fig9 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex2.19/ChenFlurMukhopadhyaySAS2012Ex219.jar ChenFlurMukhopadhyaySAS2012Ex219 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex2.07/ChenFlurMukhopadhyaySAS2012Ex207.jar ChenFlurMukhopadhyaySAS2012Ex207 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/LeikeHeizmannWST2014Ex9/LeikeHeizmannWST2014Ex9.jar LeikeHeizmannWST2014Ex9 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/ChawdharyCookGulwaniSagivYang-ESOP2008-easy2/ChawdharyCookGulwaniSagivYangESOP2008easy2.jar ChawdharyCookGulwaniSagivYangESOP2008easy2 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/LeikeHeizmann-TACAS2014-Ex1/LeikeHeizmannTACAS2014Ex1.jar LeikeHeizmannTACAS2014Ex1 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/HeizmannHoenickeLeikePodelski-ATVA2013-Fig4/HeizmannHoenickeLeikePodelskiATVA2013Fig4.jar HeizmannHoenickeLeikePodelskiATVA2013Fig4 loop None
+termination-suite/termination-crafted-lit/terminating/LeikeHeizmann-TACAS2014-Ex9/LeikeHeizmannTACAS2014Ex9.jar LeikeHeizmannTACAS2014Ex9 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-wise/AliasDarteFeautrierGonnordSAS2010wise.jar AliasDarteFeautrierGonnordSAS2010wise loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-easy2-2/AliasDarteFeautrierGonnordSAS2010easy22.jar AliasDarteFeautrierGonnordSAS2010easy22 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex2.13/ChenFlurMukhopadhyaySAS2012Ex213.jar ChenFlurMukhopadhyaySAS2012Ex213 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/HeizmannHoenickeLeikePodelski-ATVA2013-Fig5-modified/HeizmannHoenickeLeikePodelskiATVA2013Fig5modified.jar HeizmannHoenickeLeikePodelskiATVA2013Fig5modified loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex3.01/ChenFlurMukhopadhyaySAS2012Ex301.jar ChenFlurMukhopadhyaySAS2012Ex301 loop single_linear_with_relu
+
+# ##########################
+#  Does not check correctly
+# ##########################
+#  We learn relu(x), relu(y), relu(x+y), relu(x - y) and the checker rejects all of them. But it should accept at least one of them (the first one, probably)
+termination-suite/termination-crafted-lit/terminating/HeizmannHoenickeLeikePodelski-ATVA2013-Fig1/HeizmannHoenickeLeikePodelskiATVA2013Fig1.jar HeizmannHoenickeLeikePodelskiATVA2013Fig1 loop single_linear_with_relu
+# The RF is very easy. But the checker does not accept y even though it is learned
+termination-suite/termination-crafted-lit/terminating/PodelskiRybalchenkoTACAS2011Fig2/PodelskiRybalchenkoTACAS2011Fig1.jar PodelskiRybalchenkoTACAS2011Fig1 loop single_linear_with_relu
+# Not sure if we learn the correct function but checking throws an exception either way
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-speedFails4/AliasDarteFeautrierGonnordSAS2010speedFails4.jar AliasDarteFeautrierGonnordSAS2010speedFails4 loop None
+# Modified version (HeizmannHoenickeLeikePodelski-ATVA2013-Fig5-modified) checks correctly as we add invariant to loop guard
+termination-suite/termination-crafted-lit/terminating/HeizmannHoenickeLeikePodelski-ATVA2013-Fig5/HeizmannHoenickeLeikePodelskiATVA2013Fig5.jar HeizmannHoenickeLeikePodelskiATVA2013Fig5 loop single_linear_with_relu
+
+
+# ##########################
+#  Does not learn correctly
+#  No known technical issues but doesn't work for unknown reasons (maybe pathological case, maybe the RF is to complicated)
+# ##########################
+termination-suite/termination-crafted-lit/terminating/NoriSharmaFSE2013Fig7/NoriSharmaFSE2013Fig7.jar NoriSharmaFSE2013Fig7 loop single_linear_with_relu
+
+#todo Might be easy, might be pathological. rf might be -x + y, but we learn - x - z note that we have the instructio x = z all the time
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex3.10/ChenFlurMukhopadhyaySAS2012Ex310.jar ChenFlurMukhopadhyaySAS2012Ex310 loop single_linear_with_relu
+# Probably complex ranking function
+termination-suite/termination-crafted-lit/terminating/GopanReps-CAV2006-Fig1a/GopanRepsCAV2006Fig1a.jar GopanRepsCAV2006Fig1a loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex3.04/ChenFlurMukhopadhyaySAS2012Ex304.jar ChenFlurMukhopadhyaySAS2012Ex304 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/Masse-VMCAI2014-Ex6/MasseVMCAI2014Ex6.jar MasseVMCAI2014Ex6 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex2.06/ChenFlurMukhopadhyaySAS2012Ex206.jar ChenFlurMukhopadhyaySAS2012Ex206 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-speedpldi2/AliasDarteFeautrierGonnordSAS2010speedpldi2.jar AliasDarteFeautrierGonnordSAS2010speedpldi2 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex3.07/ChenFlurMukhopadhyaySAS2012Ex307.jar ChenFlurMukhopadhyaySAS2012Ex307 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-speedpldi3/AliasDarteFeautrierGonnordSAS2010speedpldi3.jar AliasDarteFeautrierGonnordSAS2010speedpldi3 loop single_linear_with_relu
+termination-suite/terminaNoriSharmaFSE2013Fig7tion-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex2.08/ChenFlurMukhopadhyaySAS2012Ex208.jar ChenFlurMukhopadhyaySAS2012Ex208 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex2.21/ChenFlurMukhopadhyaySAS2012Ex221.jar ChenFlurMukhopadhyaySAS2012Ex221 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/BrockschmidtCookFuhs-CAV2013-Introduction/BrockschmidtCookFuhsCAV2013Introduction.jar BrockschmidtCookFuhsCAV2013Introduction loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-terminate/AliasDarteFeautrierGonnordSAS2010terminate.jar AliasDarteFeautrierGonnordSAS2010terminate loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/PodelskiRybalchenkoVMCAI2004Ex2/PodelskiRybalchenkoVMCAI2004Ex2.jar PodelskiRybalchenkoVMCAI2004Ex2 loop single_linear_with_relu
+#TODO Exception with mvgaussian
+termination-suite/termination-crafted-lit/terminating/HeizmannHoenickeLeikePodelski-ATVA2013-Fig2/HeizmannHoenickeLeikePodelskiATVA2013Fig2.jar HeizmannHoenickeLeikePodelskiATVA2013Fig2 loop single_linear_with_relu
+# complex, probably with max
+termination-suite/termination-crafted-lit/terminating/GulavaniGulwani-CAV2008-Fig1a/GulavaniGulwaniCAV2008Fig1a.jar GulavaniGulwaniCAV2008Fig1a loop single_linear_with_relu
+# single_linear_with_relu non linear
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex3.05/ChenFlurMukhopadhyaySAS2012Ex305.jar ChenFlurMukhopadhyaySAS2012Ex305 loop single_linear_with_relu
+# single_linear_with_relu non linear
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex4.01/ChenFlurMukhopadhyaySAS2012Ex401.jar ChenFlurMukhopadhyaySAS2012Ex401 loop single_linear_with_relu
+#hard
+termination-suite/termination-crafted-lit/terminating/KroeningSharyginaTsitovichWintersteiger-CAV2010-Fig1/KroeningSharyginaTsitovichWintersteigerCAV2010Fig1.jar KroeningSharyginaTsitovichWintersteigerCAV2010Fig1 loop single_linear_with_relu
+# Simple program but maybe complex rf
+termination-suite/termination-crafted-lit/terminating/CookSeeZuleger-TACAS2013-Fig8b/CookSeeZulegerTACAS2013Fig8b.jar CookSeeZulegerTACAS2013Fig8b loop single_linear_with_relu
+# rf is probably a but the operations on b make it difficult to learn
+termination-suite/termination-crafted-lit/terminating/Masse-VMCAI2014-Fig1a/MasseVMCAI2014Fig1a.jar MasseVMCAI2014Fig1a loop single_linear_with_relu
+# Rounding errors make for weird stuff, should work before rounding
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex2.16/ChenFlurMukhopadhyaySAS2012Ex216.jar ChenFlurMukhopadhyaySAS2012Ex216 loop single_linear_with_relu
+# Complex problem
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-cousot9/AliasDarteFeautrierGonnordSAS2010cousot9.jar AliasDarteFeautrierGonnordSAS2010cousot9 loop single_linear_with_relu
+# hard, non-linear
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex3.03/ChenFlurMukhopadhyaySAS2012Ex303.jar ChenFlurMukhopadhyaySAS2012Ex303 loop single_linear_with_relu
+# hard, might be pathological
+termination-suite/termination-crafted-lit/terminating/ColonSipma-TACAS2001-Fig1/ColonSipmaTACAS2001Fig1.jar ColonSipmaTACAS2001Fig1 loop single_linear_with_relu
+# hard
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Fig1/ChenFlurMukhopadhyaySAS2012Fig1.jar ChenFlurMukhopadhyaySAS2012Fig1 loop single_linear_with_relu
+# No idea, probably hard
+termination-suite/termination-crafted-lit/terminating/NoriSharmaFSE2013Fig8/NoriSharmaFSE2013Fig8.jar NoriSharmaFSE2013Fig8 loop single_linear_with_relu
+# No idea, probably hard, non linear
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex2.18/ChenFlurMukhopadhyaySAS2012Ex218.jar ChenFlurMukhopadhyaySAS2012Ex218 loop single_linear_with_relu
+# Hard, probably non-linear
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex2.09/ChenFlurMukhopadhyaySAS2012Ex209.jar ChenFlurMukhopadhyaySAS2012Ex209 loop single_linear_with_relu
+
+
+
+# Nested Loops
+
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-nestedLoop-2/AliasDarteFeautrierGonnordSAS2010nestedLoop2.jar AliasDarteFeautrierGonnordSAS2010nestedLoop2 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/LarrazOliverasRodriguez-CarbonellRubio-FMCAD2013-Fig1/LarrazOliverasRodriguezCarbonellRubioFMCAD2013Fig1.jar LarrazOliverasRodriguezCarbonellRubioFMCAD2013Fig1 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-nestedLoop-1/AliasDarteFeautrierGonnordSAS2010nestedLoop1.jar AliasDarteFeautrierGonnordSAS2010nestedLoop1 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/Urban-WST2013-Fig2/UrbanWST2013Fig2.jar UrbanWST2013Fig2 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-wcet2/AliasDarteFeautrierGonnordSAS2010wcet2.jar AliasDarteFeautrierGonnordSAS2010wcet2 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/BrockschmidtCookFuhs-CAV2013-Fig9a/BrockschmidtCookFuhsCAV2013Fig9a.jar BrockschmidtCookFuhsCAV2013Fig9a loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-complex/AliasDarteFeautrierGonnordSAS2010complex.jar AliasDarteFeautrierGonnordSAS2010complex loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-while2/AliasDarteFeautrierGonnordSAS2010while2.jar AliasDarteFeautrierGonnordSAS2010while2 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/AliasDarteFeautrierGonnord-SAS2010-loops/AliasDarteFeautrierGonnordSAS2010loops.jar AliasDarteFeautrierGonnordSAS2010loops loop None
+termination-suite/termination-crafted-lit/terminating/PodelskiRybalchenkoLICS2004Fig1/PodelskiRybalchenkoLICS2004Fig1.jar PodelskiRybalchenkoLICS2004Fig1 loop None
+# ##########################
+# Bugs, Unknown, and other
+# ##########################
+# TODO this should not work, but it says it does. It has nested loops, hence it should not work. I think this is a bug in the checker
+termination-suite/termination-crafted-lit/terminating/BrockschmidtCookFuhs-CAV2013-Fig1/BrockschmidtCookFuhsCAV2013Fig1.jar BrockschmidtCookFuhsCAV2013Fig1 loop single_linear_with_relu
+
+
+# ##########################
+# Pathological Cases
+# ##########################
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex2.01/ChenFlurMukhopadhyaySAS2012Ex201.jar ChenFlurMukhopadhyaySAS2012Ex201 loop single_linear_with_relu
+termination-suite/termination-crafted-lit/terminating/LeikeHeizmann-TACAS2014-Fig1/LeikeHeizmannTACAS2014Fig1.jar LeikeHeizmannTACAS2014Fig1 loop single_linear_with_relu
+ # PATHOLOGICAL CASE, short traces
+termination-suite/termination-crafted-lit/terminating/ChenFlurMukhopadhyay-SAS2012-Ex1.01/ChenFlurMukhopadhyaySAS2012Ex101.jar ChenFlurMukhopadhyaySAS2012Ex101 loop single_linear_with_relu
+
+
+
+

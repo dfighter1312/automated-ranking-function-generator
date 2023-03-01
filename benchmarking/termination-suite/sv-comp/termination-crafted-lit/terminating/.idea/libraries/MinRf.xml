@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="MinRf">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/min_rf/MinRf.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

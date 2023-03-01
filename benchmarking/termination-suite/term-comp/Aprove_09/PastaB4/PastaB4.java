@@ -1,0 +1,26 @@
+/**
+ * Example taken from "A Term Rewriting Approach to the Automated Termination
+ * Analysis of Imperative Programs" (http://www.cs.unm.edu/~spf/papers/2009-02.pdf)
+ * and converted to Java.
+ */
+
+public class PastaB4 {
+
+    public static void loop(int x, int y) {
+    while (x > y) {
+            int t = x;
+            x = y;
+            y = t;
+        }
+    
+    }
+
+
+    public static void main(String[] args) {
+        Random.args = args;
+        int x = Random.random();
+        int y = Random.random();
+
+        loop(x, y);
+    }
+}

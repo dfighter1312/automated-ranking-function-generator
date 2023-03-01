@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Aviad">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/aviad/Aviad.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
