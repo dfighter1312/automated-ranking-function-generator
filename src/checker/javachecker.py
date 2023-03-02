@@ -8,10 +8,10 @@
 import pathlib
 import os
 
-from get_loop_heads import get_loop_heads
+from utils.get_loop_heads import get_loop_heads
 
 file_path = str(pathlib.Path(__file__).parent.absolute())
-os.environ['CLASSPATH'] = ':'.join([e.path for e in os.scandir(file_path + '/../libs/')])
+os.environ['CLASSPATH'] = ':'.join([e.path for e in os.scandir(file_path + '/../../libs/')])
 from jnius import autoclass, cast
 
 import numpy as np

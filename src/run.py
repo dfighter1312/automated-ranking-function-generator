@@ -78,8 +78,8 @@ if __name__ == "__main__":
     parser.add_argument('-c', '--class', dest='klass', help='Class file to check', required=True)
     parser.add_argument('-m', '--method', dest='method', help='Method to check termination for', required=True)
     parser.add_argument('--strategy', dest='strategy', help='Strategy to use for analysis', required=True)
-    parser.add_argument('--seed', dest='seed', help='Seed', type=int, required=False, default=None)
-    parser.add_argument('--samples', dest='samples', type=int, help='Number of Samples to use to generate.', required=False, default=None)
+    parser.add_argument('--seed', dest='seed', help='Seed', type=int, required=False, default=0)
+    parser.add_argument('--samples', dest='samples', type=int, help='Number of Samples to use to generate.', required=False, default=1000)
     parser.add_argument('--startargs', dest='strat_args', type=str, help='Special arguments for strategies. Be careful, this is strategy dependent', required=False)
     
     args = parser.parse_args()

@@ -16,7 +16,7 @@ def get_loop_heads(jar_file, class_name, method_name):
     from jnius import autoclass
     
     URL = autoclass('java.net.URL')
-    URLClassLoader = autoclass('java.net.URLCLassLoader')
+    URLClassLoader = autoclass('java.net.URLClassLoader')
     
     CFGAnalyzer = autoclass('javachecker.CFGAnalyzer')
     

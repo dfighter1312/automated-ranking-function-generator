@@ -1,11 +1,12 @@
 import time
+import traceback
 import psutil
 import torch
 import sympy as sp
 import torch.nn as nn
-from javachecker import check_sum_of_relu
-from trace_utils import tracing
-from get_loop_heads import get_loop_heads
+from checker.javachecker import check_sum_of_relu
+from utils.trace_utils import tracing
+from utils.get_loop_heads import get_loop_heads
 from utils.training import train_ranking_function
 
 
@@ -58,7 +59,7 @@ def anticorr_sumofrelu(jar_file, class_name, method_name, overwrite_sampling='pa
             n_processes=processes
         )
         
-        input_vars = trace.get_pos_indetifiers(frame=5)
+        input_vars = trace.get_pos_identifiers(frame=5)
         
         input_before = []
         input_after = []
@@ -140,7 +141,7 @@ def anticorr_sumofrelu(jar_file, class_name, method_name, overwrite_sampling='pa
                 print('Not yet.')
                 print(cex)
 
-            result['checking'] += time.time() - check_start
+            result['checking'] = time.time() - check_start
 
             if (result['decrease']):
                 break
@@ -162,6 +163,7 @@ def anticorr_sumofrelu(jar_file, class_name, method_name, overwrite_sampling='pa
     except Exception as e:
         result['error'] = (e.__class__.__name__, str(e))
         print(e.__class__.__name__, e)
+        traceback.print_exc()
         return result
     
     
