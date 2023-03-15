@@ -33,4 +33,9 @@ the environment variable JAVAC needs to be set to a JAVA 11 javac binary. For ex
 
 ### Updates
 
+- Mar 15:
+  - Factored the anticorr_sumofrelu strategy2 and the benchmark flow.
+  - Update suitable logging.
+  - Remove rounding before checking candidate ranking function.
+  - Increase number of sample after every 5 failed generations of candidates.
 - Feb 29: Factored the source code and implementation of anticorr_sumofrelu strategy.
