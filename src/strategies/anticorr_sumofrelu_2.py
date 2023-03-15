@@ -4,8 +4,6 @@ import psutil
 import torch
 import sympy as sp
 import torch.nn as nn
-from models.SumOfRelu import SumOfRelu
-from models.SumOfRelu2 import SumOfRelu2
 from checker.javachecker import check_sum_of_relu
 from utils.trace_utils import tracing
 from utils.get_loop_heads import get_loop_heads
@@ -27,7 +25,7 @@ def anticorr_sumofrelu(jar_file, class_name, method_name, n_trials = 20, overwri
         force_sample_size (int, optional): Limit the sample size. Defaults to None.
         seed (int, optional): Torch random seed. Defaults to None.
     """
-    limit = 100
+    limit = 1000
     learning_rate = 0.001
     n_iterations = 1000
     n_summands = 5
@@ -53,7 +51,7 @@ def anticorr_sumofrelu(jar_file, class_name, method_name, n_trials = 20, overwri
         for trial in range(n_trials):
             
             if trial % 5 == 0:
-            
+
                 trace, trace_time = tracing(
                     jar_file=jar_file,
                     class_name=class_name,
@@ -78,14 +76,12 @@ def anticorr_sumofrelu(jar_file, class_name, method_name, n_trials = 20, overwri
                     input_before.append(head_input_before)
                     input_after.append(head_input_after)
 
-            model = SumOfRelu(
-                n_in=len(trace.get_pos_identifiers()),
+            model = SumOfRelu2(
+                len(input_vars),
                 n_out=len(loop_heads),
-                n_summands=n_summands,
-                input_vars=input_vars
+                n_summands=5
             )
             model, training_time = train_ranking_function(
-                model=model,
                 loop_heads=loop_heads,
                 trace=trace,
                 input_before=input_before,

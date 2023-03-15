@@ -22,7 +22,7 @@ strategy_mapping = {
     "anticorr_sumofrelu": anticorr_sumofrelu
 }
 
-def main(args):
+def run_single_check(input, klass, method, strategy, seed, samples, startargs):
     
     # Set seeds
     if args.seed is not None:
@@ -33,33 +33,19 @@ def main(args):
         # Output in Torch must be deterministic
         torch.use_deterministic_algorithms(True)
         
-    strategy = strategy_mapping[args.strategy]
+    strategy = strategy_mapping[strategy]
     print("Running {} on JAR {}, class {}, method {}".format(
-        args.strategy,
-        args.input,
-        args.klass,
-        args.method
+        strategy,
+        input,
+        klass,
+        method
     ))
     
     result = {}
     if args.strat_args is not None:
-        result = strategy(
-            args.input,
-            args.klass,
-            args.method,
-            seed=args.seed,
-            sample_size=args.samples,
-            strat_args=args.strat_args
-        )
+        result = strategy(input, klass, method, seed=seed, sample_size=samples, strat_args=strat_args)
     else:
-        result = strategy(
-            args.input,
-            args.klass,
-            args.method,
-            seed=args.seed,
-            sample_size=args.samples
-        )
-    pprint.pprint(result)
+        result = strategy(input, klass, method, seed=seed, sample_size=samples)
     result["strategy"] = strategy_mapping[args.strategy].__name__
     result["seed"] = args.seed
     
@@ -70,6 +56,13 @@ def main(args):
             print("Termination could not be proven.")
     else:
         print("Termination could not be proven or decrease value is not set.")
+    
+    if "decrease" in result:
+        result["decrease"] = str(result["decrease"])     
+    if "invar" in result:
+        result["invar"] = str(result["invar"])  
+    print(result)
+    return result
 
 
 if __name__ == "__main__":
@@ -80,7 +73,7 @@ if __name__ == "__main__":
     parser.add_argument('--strategy', dest='strategy', help='Strategy to use for analysis', required=True)
     parser.add_argument('--seed', dest='seed', help='Seed', type=int, required=False, default=0)
     parser.add_argument('--samples', dest='samples', type=int, help='Number of Samples to use to generate.', required=False, default=1000)
-    parser.add_argument('--startargs', dest='strat_args', type=str, help='Special arguments for strategies. Be careful, this is strategy dependent', required=False)
+    parser.add_argument('--strat_args', dest='strat_args', type=str, help='Special arguments for strategies. Be careful, this is strategy dependent', required=False)
     
     args = parser.parse_args()
-    main(args)
+    run_single_check(args.input, args.klass, args.method, args.strategy, args.seed, args.samples, args.strat_args)

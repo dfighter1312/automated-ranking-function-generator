@@ -100,7 +100,7 @@ def run_tracing(input_program, class_name, method_name, output_file, samples, lo
 
         run_cmd = create_run_command(input_program, class_name, method_name, f.name, sampling_strategy,
                                      samples_per_process, loopheads=loopheads, seed=seed, tracelimit=tracelimit)
-
+        print("Running command: ", run_cmd)
         p = subprocess.Popen(run_cmd, env=environment, stdout=subprocess.PIPE)
         processes.append((f, p))
 
@@ -124,10 +124,6 @@ def run_tracing(input_program, class_name, method_name, output_file, samples, lo
             json.dump(json_object, f, indent=4)
 
     tracing_time = time.time() - start
-
-    print("Tracing and processing results finished in {}.".format(tracing_time))
-
-    # subprocess.run(command,env=environment)
 
 
 def run_cegs_tracing(input_program, class_name, method_name, output_file, samples, cegs_file, loopheads=None, tracelimit=None,
@@ -186,7 +182,3 @@ def run_cegs_tracing(input_program, class_name, method_name, output_file, sample
             json.dump(json_object, f, indent=4)
 
     tracing_time = time.time() - start
-
-    print("Tracing and processing results finished in {}.".format(tracing_time))
-
-    # subprocess.run(command,env=environment)

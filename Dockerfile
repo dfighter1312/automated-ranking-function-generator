@@ -31,7 +31,7 @@ RUN pip3 install tqdm
 RUN pip3 install termcolor
 RUN pip3 install psutil
 
-RUN pip install torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cpu
+RUN pip install torch==1.11.0 --extra-index-url https://download.pytorch.org/whl/cpu
 
 # Get files
 ADD . /home/

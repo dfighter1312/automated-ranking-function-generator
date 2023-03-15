@@ -29,8 +29,6 @@ class SumOfRelu(nn.Module):
             self.out.append(row)
             
         self.out = torch.stack(self.out, dim=0)
-        # Test self.out
-        print(self.out)
         
     def forward(self, state):
         layer = self.fc1(state)

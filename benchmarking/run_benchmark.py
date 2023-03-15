@@ -14,9 +14,11 @@ def main(args):
 
     # create problem list
     problems = None
+
     if args.fileline is not None:
         file, line = args.fileline
         line = int(line)
+
         with open(file) as f:
             lines = f.readlines()
 
@@ -31,8 +33,8 @@ def main(args):
     succ = []
     err = []
     timeout = []
-    for problem in tqdm.tqdm(problems.to_dict(orient="records"), unit="problems"):
-        cmd = ["python3", "../src/nuTerm.py", "-i", problem["File"], "-c", problem["Class"], "-m",
+    for problem in tqdm.tqdm(problems.to_dict(orient="records")[:5], unit="problems"):
+        cmd = ["python3", "../src/run.py", "-i", problem["File"], "-c", problem["Class"], "-m",
                    problem["Function"]]
 
         if args.strategy is not None:
@@ -67,14 +69,13 @@ def main(args):
         try:
             if args.verbose:
                 print(process.stdout)
-            l = list(filter(lambda x: not x.startswith("#"), process.stdout.strip().split("\n")))
-            json_res = (l[-3])
+            l = process.stdout.strip().split("{")[-1].split("}")[0]
+            json_res = "{" + l.replace("\'", "\"") + "}"
             res_dict = json.loads(json_res)
             res_dict["wallclock_time"] = wc_time
             succ.append(res_dict)
         except Exception as e:
             print(e)
-            # print(list(filter(lambda x: not x.startswith("#"), process.stdout.strip().split("\n")))[-3])
             err.append((problem["File"], problem["Class"], problem["Function"], problem["Strategy"]))
 
     print("\n\n")
@@ -89,9 +90,9 @@ def main(args):
             print(colored("{:4} {:50s}\t{:15s}".format(i, r["class"], r["function"]), "yellow"))
             continue
         if r["decrease"]:
-            print(colored("{:4} {:50s}\t{:15s}\t{:8.2f}\t{:8.2f}\t{:8.2f}\t      {}\t    {}".format(i, r["class"], r["function"], r["tracing"], r["learning"], r["wallclock_time"],r["decrease"], r["invar"]), "green"))
+            print(colored("{:4} {:50s}\t{:15s}\t{:8.2f}\t{:8.2f}\t{:8.2f}\t      {}\t    {}".format(i, r["class"], r["function"], r["trace_time"], r["learning_time"], r["wallclock_time"],r["decrease"], r["invar"]), "green"))
         else:
-            print(colored("{:4} {:50s}\t{:15s}\t{:8.2f}\t{:8.2f}\t{:8.2f}\t      {}\t    {}".format(i, r["class"], r["function"], r["tracing"], r["learning"], r["wallclock_time"],r["decrease"], r["invar"]), "red"))
+            print(colored("{:4} {:50s}\t{:15s}\t{:8.2f}\t{:8.2f}\t{:8.2f}\t      {}\t    {}".format(i, r["class"], r["function"], r["trace_time"], r["learning_time"], r["wallclock_time"],r["decrease"], r["invar"]), "red"))
 
     print("\n\n\n")
     print("Unsuccessful Runs with Exceptions or other causes")
@@ -137,6 +138,8 @@ def main(args):
                 data[now.strftime("%d/%m/%Y %H:%M:%S")] = dt
         else:
             data = {now.strftime("%d/%m/%Y %H:%M:%S"): dt}
+            
+        
 
         with open(args.save_file, "w") as write_file:
             json.dump(data, write_file, indent=4)
@@ -145,19 +148,15 @@ def main(args):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    # parser.add_argument('--seed', dest='seed', type=int, default=199)
     parser.add_argument('-set', dest='set', help='Benchmarking set file', required=False)
     parser.add_argument('-save', dest='save_file', help='File the results are saved to.', required=False)
     parser.add_argument('-seed', dest='seed', help='File the results are saved to.', required=False)
     parser.add_argument('-strategy', dest='strategy', help='File the results are saved to.', required=False)
     parser.add_argument('-verbose', action='store_true', help='Verbose output', required=False)
     parser.add_argument('-samples', dest='samples', type=int, help='Number of samples.', required=False)
-    parser.add_argument('-timeout', dest='timeout', type=int, help='Seconds after which we time out.', required=False,
-                        default=60)
+    parser.add_argument('-timeout', dest='timeout', type=int, help='Seconds after which we time out.', required=False, default=60)
     parser.add_argument('-stratargs', dest='strat_args', type=str, help='Strategy arguments.', required=False)
-
-    parser.add_argument('-fileline', metavar=('file', 'line'), help='File and line in file (starting at 1).', nargs=2,
-                        required=False)
+    parser.add_argument('-fileline', metavar=('file', 'line'), help='File and line in file (starting at 1).', nargs=2, required=False)
 
     args = parser.parse_args()
 

@@ -9,6 +9,7 @@ from utils.time_decorator import time_it
 
 @time_it
 def train_ranking_function(
+    model,
     loop_heads,
     trace,
     input_before,
@@ -20,15 +21,9 @@ def train_ranking_function(
     n_summands=5
 ):
 
-    model = SumOfRelu(
-        n_in=len(trace.get_pos_identifiers()),
-        n_out=len(loop_heads),
-        n_summands=n_summands,
-        input_vars=input_vars
-    )
     optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
     
-    print('=' * 40)
+    print('=' * 100)
     print('- Learning')
     print('=' * 40)
     
@@ -49,13 +44,14 @@ def train_ranking_function(
             out_after=output_after
         )
         
-        # Stop if loss = 0, TODO: should change this into EarlyStopping instead
+        # Stop if loss = 0
         if loss == 0.:
-            result["iteration"] = iteration
+            break
         
         loss.backward()
         optimizer.step()
-            
+    
+    result["n_iterations"] += iteration + 1        
     return model
             
                 
