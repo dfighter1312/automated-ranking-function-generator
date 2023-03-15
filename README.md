@@ -1,4 +1,5 @@
-# nuTerm
+# Automated Ranking Function Generator for Program Termination Analysis
+[Name will be and MUST be changed later]
 
 ### Problem sets
 The problem sets can be found in:
