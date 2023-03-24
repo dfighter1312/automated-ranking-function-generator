@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -30,11 +31,11 @@ class SumOfRelu2(nn.Module):
             self.fc1.append(hidden)
             self.fc2.append(output)
             
-        def forward(self, state):
-            res = []
-            for i in range(0, self.n_out):
-                layer = self.fc1[i](state)
-                layer = F.relu(layer)
-                layer = self.fc2[i](layer)
-                res.append(layer)
-            return res
+    def forward(self, state):
+        res = []
+        for i in range(0, self.n_out):
+            layer = self.fc1[i](state)
+            layer = F.relu(layer)
+            layer = self.fc2[i](layer)
+            res.append(layer)
+        return res

@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,7 +22,6 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        System.out.println("Starting");
 
         Options options = new Options();
         options.addRequiredOption("c","class", true, "Class with method.");
@@ -31,6 +31,14 @@ public class Main {
         options.addOption("seed", "seed", true, "Seed for random objects. If not set, the seed will be randomly generated.");
         options.addOption("strategy", "strategy", true, "Strategy for generating sampling data");
         options.addOption("cegs", "cegs", true, "Strategy for generating sampling data");
+
+        Option customOption = new Option(
+            "custom",
+            false,
+            "Samples to be used as input"
+        );
+        customOption.setArgs(Option.UNLIMITED_VALUES);
+        options.addOption(customOption);
 
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = null;
@@ -111,9 +119,49 @@ public class Main {
                 gen = new EasyRandomGenHandler();
             }
         }
+        System.out.println(gen.getClass());
 
         System.out.println("Starting");
-        if(cmd.hasOption("cegs")) { // If we have a CEGIS loop
+        if(cmd.hasOption("custom")) {
+            System.out.println("Using custom inputs");
+
+            Method method = methods.get(0);
+            Type[] types = method.getGenericParameterTypes();
+            Object[] p = new Object[types.length];
+
+            for (int i = 0; i < p.length; ++i) {
+                Type ty = types[i];
+                String val = cmd.getOptionValues("custom")[i];
+                if (ty instanceof Class) {
+                    if (ty.equals(Boolean.class) || ty.equals(boolean.class)) {
+                        p[i] = Boolean.parseBoolean(val);
+                    }  else if (ty.equals(Double.class)|| ty.equals(double.class)) {
+                        p[i] = Double.parseDouble(val);
+                    } else if (ty.equals(Float.class)|| ty.equals(float.class)) {
+                        p[i] = Float.parseFloat(val);
+                    } else if (ty.equals(Long.class)|| ty.equals(long.class)) {
+                        p[i] = Long.parseLong(val);
+                    } else if (ty.equals(Integer.class) || ty.equals(int.class)) {
+                        p[i] = Integer.parseInt(val);
+                    } else {
+                        // Currently does not support this
+                        p[i] = null;
+                    }
+                }
+            }
+
+            try {
+                Main.invoke(method, p);
+            } catch (InvocationTargetException ex) {
+                Throwable e = ex.getCause();
+                if (e instanceof TraceSizeLimitReached) {
+                    //System.err.println("Caught ThreadDeath exception. Tracing of sample " + i + " was interrupted.");
+                } else {
+                    throw ex;
+                }
+            }
+
+        } else if(cmd.hasOption("cegs")) { // If we have a CEGIS loop
             System.out.println("CEGS strategy");
             String argumentsFile = cmd.getOptionValue("cegs");
 
@@ -123,8 +171,6 @@ public class Main {
             gen = new CEGSGenerator(argumentsFile);
 
             Object[] p = gen.nextSampleArguments(types);
-
-
 
             try {
                 Main.invoke(method, p);
@@ -160,15 +206,19 @@ public class Main {
             }
 
         } else {
-
+            System.out.println("Other strategies");
             Method method = methods.get(0); //
-
             Type[] types = method.getGenericParameterTypes();
-
+            System.out.println(types[0]);
 
             for (int i = 0; i < samples; ++i) {
 
                 Object[] p = gen.nextSampleArguments(types);
+
+                for (int j = 0; i < p.length; ++i) {
+                    System.out.println(p[j].getClass());
+                }
+                
                 try {
                     Main.invoke(method, p);
                 } catch (InvocationTargetException ex) {
@@ -180,39 +230,6 @@ public class Main {
                     }
                 }
             }
-
-            /*
-            gen = new PairwiseAnticorrelated();
-
-            for (int i = 0; i < samples/2; ++i) {
-
-                Object[] p = gen.nextSampleArguments(types);
-                try {
-                    Main.invoke(method, p);
-                } catch (InvocationTargetException ex) {
-                    Throwable e = ex.getCause();
-                    if (e instanceof TraceSizeLimitReached) {
-                        //System.err.println("Caught ThreadDeath exception. Tracing of sample " + i + " was interrupted.");
-                    } else {
-                        throw ex;
-                    }
-                }
-            }
-
-            Object[] p = new Object[] {300, 0, 0};
-            try {
-                Main.invoke(method, p);
-            } catch (InvocationTargetException ex) {
-                Throwable e = ex.getCause();
-                if (e instanceof TraceSizeLimitReached) {
-                    //System.err.println("Caught ThreadDeath exception. Tracing of sample " + i + " was interrupted.");
-                } else {
-                    throw ex;
-                }
-            }
-             */
-
-
         }
 
     }

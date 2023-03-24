@@ -33,7 +33,7 @@ def main(args):
     succ = []
     err = []
     timeout = []
-    for problem in tqdm.tqdm(problems.to_dict(orient="records")[:5], unit="problems"):
+    for problem in tqdm.tqdm(problems.to_dict(orient="records"), unit="problems"):
         cmd = ["python3", "../src/run.py", "-i", problem["File"], "-c", problem["Class"], "-m",
                    problem["Function"]]
 

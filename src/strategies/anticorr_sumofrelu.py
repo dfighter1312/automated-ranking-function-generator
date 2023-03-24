@@ -5,7 +5,6 @@ import torch
 import sympy as sp
 import torch.nn as nn
 from models.SumOfRelu import SumOfRelu
-from models.SumOfRelu2 import SumOfRelu2
 from checker.javachecker import check_sum_of_relu
 from utils.trace_utils import tracing
 from utils.get_loop_heads import get_loop_heads
@@ -118,7 +117,7 @@ def anticorr_sumofrelu(jar_file, class_name, method_name, n_trials = 20, overwri
             lexiW = []
             lexib = []
             lexiout = []
-            for i in range(0, len(loop_heads)):
+            for i in range(len(loop_heads)):
                 lexiW.append(W[n_summands*i:n_summands*(i+1)])
                 lexib.append(b[n_summands*i:n_summands*(i+1)])
                 lexiout.append(torch.ones(1, n_summands))
@@ -140,19 +139,19 @@ def anticorr_sumofrelu(jar_file, class_name, method_name, n_trials = 20, overwri
             if (result['decrease']):
                 break
                 
-            print('=' * 100)
-            print(' - Randomising')
-            print('=' * 40)
-            seen = set()
-            for i, row in enumerate(W):
-                row = tuple(row.tolist())
-                if row in seen:
-                    nn.init.normal_(model.fc1.weight[i])
-                    e = symvars.dot(model.fc1.weight.data.numpy()[i])
-                    print("reinitialising {} to {}".format(i, e.xreplace(
-                        {n: round(n, 2) for n in e.atoms(sp.Number)})))
-                else:
-                    seen.add(row)
+            # print('=' * 100)
+            # print(' - Randomising')
+            # print('=' * 40)
+            # seen = set()
+            # for i, row in enumerate(W):
+            #     row = tuple(row.tolist())
+            #     if row in seen:
+            #         nn.init.normal_(model.fc1.weight[i])
+            #         e = symvars.dot(model.fc1.weight.data.numpy()[i])
+            #         print("reinitialising {} to {}".format(i, e.xreplace(
+            #             {n: round(n, 2) for n in e.atoms(sp.Number)})))
+            #     else:
+            #         seen.add(row)
         result['n_trials'] = trial + 1
         return result
     except Exception as e:

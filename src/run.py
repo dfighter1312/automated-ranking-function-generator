@@ -8,6 +8,7 @@ import numpy as np
 import torch
 
 from strategies.anticorr_sumofrelu import anticorr_sumofrelu
+from strategies.anticorr_sumofrelu_2 import anticorr_sumofrelu_2
 
 
 file_path = str(pathlib.Path(__file__).parent.absolute())
@@ -19,10 +20,11 @@ os.environ['CLASSPATH'] = file_path + '/../libs/share/java/com.microsoft.z3.jar'
 os.environ['LD_LIBRARY_PATH'] = file_path + '/../libs/lib/'
 
 strategy_mapping = {
-    "anticorr_sumofrelu": anticorr_sumofrelu
+    "anticorr_sumofrelu": anticorr_sumofrelu,
+    "anticorr_sumofrelu_2": anticorr_sumofrelu_2
 }
 
-def run_single_check(input, klass, method, strategy, seed, samples, startargs):
+def run_single_check(input, klass, method, strategy, seed, samples, strat_args):
     
     # Set seeds
     if args.seed is not None:

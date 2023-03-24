@@ -28,8 +28,8 @@ def chunks(l, n):
     return (l[i:i + n] for i in range(0, len(l), n))
 
 
-def create_run_command(input_program, class_name, method_name, output_file, sampling_strategy, samples, loopheads=None,
-                       seed=None, tracelimit=None, cegs_file=None):
+def create_run_command(input_program, class_name, method_name, output_file, sampling_strategy, samples=54, loopheads=None,
+                       seed=None, tracelimit=None, cegs_file=None, cex=None):
 
     environment = dict(os.environ)
 
@@ -50,7 +50,15 @@ def create_run_command(input_program, class_name, method_name, output_file, samp
         jvmti_agent_cmd = "{},tracelimit={}".format(jvmti_agent_cmd, tracelimit)
 
 
-    if cegs_file is None:
+    if cex is not None:
+        cex_values = [str(i) for i in cex.values()]
+        command = [cmd, jvmti_agent_cmd,
+                   '-jar', GEN_AND_TRACE_JAR,
+                   '-j', input_program,
+                   '-c', class_name,
+                   '-m', method_name,
+                   '-custom', ' '.join(cex_values)]
+    elif cegs_file is None:
         command = [cmd, jvmti_agent_cmd,
                    '-jar', GEN_AND_TRACE_JAR,
                    '-j', input_program,
@@ -87,7 +95,7 @@ def run_tracing(input_program, class_name, method_name, output_file, samples, lo
     environment['LD_LIBRARY_PATH'] = AGENT_LD_PATH
 
 
-    # ##### multiprocessing
+    # Multiprocessing
     # number of samples might not be exactly the number of requested samples due to rounding
     samples_per_process = samples // num_processes
     print("Creating {} samples on {} processes. Requested sample size {} actual sample size {}"
@@ -100,7 +108,7 @@ def run_tracing(input_program, class_name, method_name, output_file, samples, lo
 
         run_cmd = create_run_command(input_program, class_name, method_name, f.name, sampling_strategy,
                                      samples_per_process, loopheads=loopheads, seed=seed, tracelimit=tracelimit)
-        print("Running command: ", run_cmd)
+        print(' '.join(run_cmd))
         p = subprocess.Popen(run_cmd, env=environment, stdout=subprocess.PIPE)
         processes.append((f, p))
 
@@ -125,6 +133,40 @@ def run_tracing(input_program, class_name, method_name, output_file, samples, lo
 
     tracing_time = time.time() - start
 
+def run_cex_testing(input_program, class_name, method_name, output_file, cex, samples=None, loopheads=None, tracelimit=None,
+                    seed=None, sampling_strategy="default", num_processes=1):
+    
+    num_processes = 1
+
+    environment = dict(os.environ)
+    environment['LD_LIBRARY_PATH'] = AGENT_LD_PATH
+
+    #assert seed is not None
+    processes = []
+    for i in range(0, num_processes):
+        f = tempfile.NamedTemporaryFile()
+
+        run_cmd = create_run_command(input_program, class_name, method_name, f.name, sampling_strategy, cex=cex,
+                                     loopheads=loopheads, seed=seed, tracelimit=tracelimit)
+        print(' '.join(run_cmd))
+        p = subprocess.Popen(run_cmd, env=environment, stdout=subprocess.PIPE)
+        processes.append((f, p))
+
+    json_object = None
+    for f, p in processes:
+        p.wait()
+        if json_object is None:
+            json_object = json.load(f)
+        else:
+            json_object["traces"] += json.load(f)["traces"]
+            f.close()
+
+    if json_object is None:
+        raise Exception("Json Object is None, something went wrong")
+    else:
+        with open(output_file, 'w') as f:
+            json.dump(json_object, f, indent=4)
+    
 
 def run_cegs_tracing(input_program, class_name, method_name, output_file, samples, cegs_file, loopheads=None, tracelimit=None,
                 seed=None, num_processes=1):

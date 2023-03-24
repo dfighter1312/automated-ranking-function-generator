@@ -21,4 +21,3 @@ def ranking_loss_function(n_loop_heads, out_before, out_after):
         loss = torch.cat((loss, F.relu(out_after[i] - out_before[i] + 1)[:, i]), 0)
     loss = loss.mean()
     return loss
-    

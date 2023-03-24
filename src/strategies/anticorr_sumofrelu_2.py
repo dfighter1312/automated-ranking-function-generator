@@ -4,17 +4,18 @@ import psutil
 import torch
 import sympy as sp
 import torch.nn as nn
+from models.SumOfRelu2 import SumOfRelu2
 from checker.javachecker import check_sum_of_relu
-from utils.trace_utils import tracing
+from utils.trace_utils import tracing, tracing_cex
 from utils.get_loop_heads import get_loop_heads
-from utils.training import train_ranking_function
+from utils.training import train_ranking_function_smrl2
 from utils.print_result import print_result
 
 
 processes = psutil.cpu_count(logical=False)
 
 
-def anticorr_sumofrelu(jar_file, class_name, method_name, n_trials = 20, overwrite_sampling='pairanticorr', sample_size=1000, seed=None):
+def anticorr_sumofrelu_2(jar_file, class_name, method_name, n_trials = 20, overwrite_sampling='pairanticorr', sample_size=1000, seed=None):
     """Anticorr sumofrelu generator for neural ranking function.
 
     Args:
@@ -34,11 +35,14 @@ def anticorr_sumofrelu(jar_file, class_name, method_name, n_trials = 20, overwri
         'program': jar_file,
         'function': method_name,
         'class': class_name,
+        'functions before rounding': [],
+        'functions after rounding': [],
         'learning_time': 0,
         'trace_time': 0,
         'checking_time': 0,
         'n_trials': 0,
-        'n_iterations': 0
+        'n_iterations': 0,
+        'n_pairs': 0
     }
     print("Running with {}".format(overwrite_sampling))
     try:
@@ -50,7 +54,8 @@ def anticorr_sumofrelu(jar_file, class_name, method_name, n_trials = 20, overwri
         
         for trial in range(n_trials):
             
-            if trial % 5 == 0:
+            # if trial % 5 == 0:
+            if trial == 0:
 
                 trace, trace_time = tracing(
                     jar_file=jar_file,
@@ -75,13 +80,17 @@ def anticorr_sumofrelu(jar_file, class_name, method_name, n_trials = 20, overwri
                     head_input_before, head_input_after = trace.pair_all_traces_multi_as_tensor(head, loop_heads)
                     input_before.append(head_input_before)
                     input_after.append(head_input_after)
+                    
+                result['n_pairs'] = list(map(lambda x: x.size()[0], input_before))
 
             model = SumOfRelu2(
                 len(input_vars),
                 n_out=len(loop_heads),
-                n_summands=5
+                n_summands=5,
+                trainable_out=True
             )
-            model, training_time = train_ranking_function(
+            model, training_time = train_ranking_function_smrl2(
+                model=model,
                 loop_heads=loop_heads,
                 trace=trace,
                 input_before=input_before,
@@ -93,17 +102,6 @@ def anticorr_sumofrelu(jar_file, class_name, method_name, n_trials = 20, overwri
                 n_summands=n_summands
             )
             result["learning_time"] += training_time
-            
-            parameters = next(model.fc1.parameters()).detach().numpy()
-            result["functions"] = print_result(parameters, input_vars, "Hidden layer 1")
-            print(f"Final result for each loop header is the sum of every {n_summands} neurons.")
-            
-            W = model.fc1.weight
-
-            if model.fc1.bias is not None:
-                b = model.fc1.bias
-            else:
-                b = torch.zeros(model.fc1.out_features, 1)
                 
             print('=' * 100)
             print(' - Checking')
@@ -115,40 +113,81 @@ def anticorr_sumofrelu(jar_file, class_name, method_name, n_trials = 20, overwri
             lexib = []
             lexiout = []
             for i in range(0, len(loop_heads)):
-                lexiW.append(W[n_summands*i:n_summands*(i+1)])
-                lexib.append(b[n_summands*i:n_summands*(i+1)])
-                lexiout.append(torch.ones(1, n_summands))
+                parameters = next(model.fc1[i].parameters()).detach().numpy()
+                result["functions before rounding"] += print_result(parameters, input_vars, f"(Loop header #{i+1}) Hidden layer 1")
+                out_parameters = next(model.fc2[i].parameters()).detach().numpy()
+                result["functions before rounding"] += print_result(out_parameters, input_vars, f"(Loop header #{i+1}) Output layer", var_dependent=False)
+                
+            Ses = [0.5, 1.0]
 
-            result['decrease'], result['invar'], cex = check_sum_of_relu(jar_file, class_name, method_name,
-                                                                         loop_heads, input_vars,
-                                                                         lexiout, lexiW, lexib)
+            for S in Ses:
+                print('=' * 40)
+                print(' - Rounding with S =', S)
+                print('=' * 40)
 
-            if (result['decrease']):
-                print("Termination was proven.")
-                print('YES')
-            else:
-                print('Not yet.')
-                print(cex)
+                W_to_check = []
+                b_to_check = []
+                out_to_check = []
+                for i in range(len(loop_heads)):
+                    W = model.fc1[i].weight
+                    if model.fc1[i].bias is not None:
+                        b = model.fc1[i].bias
+                    else:
+                        b = torch.zeros(model.fc1[i].out_features)
+                    out = model.fc2[i].weight
+
+                    W_round = (W.data.numpy() / S).round()
+                    b_round = (b.data.numpy() / S).round()
+                    out_round = (out.data.numpy() / S).round()
+
+                    symvars = sp.Matrix(sp.symbols(input_vars, real=True))
+                    symorig = (W * symvars + b[:, None]).applyfunc(sp.Function('relu'))
+                    symround = (W_round * symvars + b_round[:, None]).applyfunc(sp.Function('relu'))
+                    # for j, e in enumerate(symorig):
+                    #     print('  ', j,
+                    #         (round(out[0, j].item(), 2) * e).xreplace({n: round(n, 2) for n in e.atoms(sp.Number)}))
+                    print('  After rounding')
+                    for j, e in enumerate(symround):
+                        print(f"Branch {j + 1}: {out_round[0, j] * e}")
+                        result["functions after rounding"] += [f"Branch {j + 1}: {out_round[0, j] * e}"]
+
+                    W_to_check.append(W_round)
+                    b_to_check.append(b_round)
+                    out_to_check.append(out_round)
+
+                result['decrease'], result['invar'], cex = check_sum_of_relu(jar_file, class_name, method_name,
+                                                                            loop_heads, input_vars,
+                                                                            out_to_check, W_to_check, b_to_check)
+
+                if (result['decrease']):
+                    print('YES')
+                    break
+                else:
+                    result["functions before rounding"] = []
+                    result["functions after rounding"] = []
+                    print('Not yet.')
+                    print(cex)
+                    
+                    # if len(cex) != 0:
+                    #     # Adding counterexamples to the dataset
+                    #     trace, trace_time = tracing_cex(
+                    #         jar_file=jar_file,
+                    #         class_name=class_name,
+                    #         method_name=method_name,
+                    #         cex=cex
+                    #     )
+                    #     print(trace)
+                    #     for head in loop_heads:
+                    #         head_input_before, head_input_after = trace.pair_all_traces_multi_as_tensor(head, loop_heads)
+                    #         input_before.append(head_input_before)
+                    #         input_after.append(head_input_after)
 
             checking_time = time.time() - check_start
             result['checking_time'] += checking_time
             
             if (result['decrease']):
                 break
-                
-            print('=' * 100)
-            print(' - Randomising')
-            print('=' * 40)
-            seen = set()
-            for i, row in enumerate(W):
-                row = tuple(row.tolist())
-                if row in seen:
-                    nn.init.normal_(model.fc1.weight[i])
-                    e = symvars.dot(model.fc1.weight.data.numpy()[i])
-                    print("reinitialising {} to {}".format(i, e.xreplace(
-                        {n: round(n, 2) for n in e.atoms(sp.Number)})))
-                else:
-                    seen.add(row)
+
         result['n_trials'] = trial + 1
         return result
     except Exception as e:
