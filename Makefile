@@ -5,6 +5,7 @@ bm_suite:
 	make -C benchmarking/termination-suite/sv-comp/termination-crafted-lit
 	make -C benchmarking/termination-suite/term-comp/Aprove_09
 	make -C benchmarking/termination-suite/nuTerm-advantage/Java
+	make -C benchmarking/termination-suite/loopInvSuite
 
 
 deps: TraceAgentSO GenAndTraceJar CalculateLoopHeadsJar JavaChecker

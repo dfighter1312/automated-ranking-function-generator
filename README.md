@@ -33,6 +33,9 @@ the environment variable JAVAC needs to be set to a JAVA 11 javac binary. For ex
 
 ### Updates
 
+- Apr 1:
+  - Add 6 sample programs from the loop invariant benchmark
+  - Change the optimizer to SGD, add 0.1 to the rounding option
 - Mar 15:
   - Factored the anticorr_sumofrelu strategy2 and the benchmark flow.
   - Update suitable logging.

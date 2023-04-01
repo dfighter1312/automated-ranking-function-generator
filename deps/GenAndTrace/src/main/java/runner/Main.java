@@ -122,46 +122,47 @@ public class Main {
         System.out.println(gen.getClass());
 
         System.out.println("Starting");
-        if(cmd.hasOption("custom")) {
-            System.out.println("Using custom inputs");
+        // if(cmd.hasOption("custom")) {
+        //     System.out.println("Using custom inputs");
 
-            Method method = methods.get(0);
-            Type[] types = method.getGenericParameterTypes();
-            Object[] p = new Object[types.length];
+        //     Method method = methods.get(0);
+        //     Type[] types = method.getGenericParameterTypes();
+        //     Object[] p = new Object[types.length];
 
-            for (int i = 0; i < p.length; ++i) {
-                Type ty = types[i];
-                String val = cmd.getOptionValues("custom")[i];
-                if (ty instanceof Class) {
-                    if (ty.equals(Boolean.class) || ty.equals(boolean.class)) {
-                        p[i] = Boolean.parseBoolean(val);
-                    }  else if (ty.equals(Double.class)|| ty.equals(double.class)) {
-                        p[i] = Double.parseDouble(val);
-                    } else if (ty.equals(Float.class)|| ty.equals(float.class)) {
-                        p[i] = Float.parseFloat(val);
-                    } else if (ty.equals(Long.class)|| ty.equals(long.class)) {
-                        p[i] = Long.parseLong(val);
-                    } else if (ty.equals(Integer.class) || ty.equals(int.class)) {
-                        p[i] = Integer.parseInt(val);
-                    } else {
-                        // Currently does not support this
-                        p[i] = null;
-                    }
-                }
-            }
+        //     for (int i = 0; i < p.length; ++i) {
+        //         Type ty = types[i];
+        //         String val = cmd.getOptionValues("custom")[i];
+        //         if (ty instanceof Class) {
+        //             if (ty.equals(Boolean.class) || ty.equals(boolean.class)) {
+        //                 p[i] = Boolean.parseBoolean(val);
+        //             }  else if (ty.equals(Double.class)|| ty.equals(double.class)) {
+        //                 p[i] = Double.parseDouble(val);
+        //             } else if (ty.equals(Float.class)|| ty.equals(float.class)) {
+        //                 p[i] = Float.parseFloat(val);
+        //             } else if (ty.equals(Long.class)|| ty.equals(long.class)) {
+        //                 p[i] = Long.parseLong(val);
+        //             } else if (ty.equals(Integer.class) || ty.equals(int.class)) {
+        //                 p[i] = Integer.parseInt(val);
+        //             } else {
+        //                 // Currently does not support this
+        //                 p[i] = null;
+        //             }
+        //         }
+        //     }
 
-            try {
-                Main.invoke(method, p);
-            } catch (InvocationTargetException ex) {
-                Throwable e = ex.getCause();
-                if (e instanceof TraceSizeLimitReached) {
-                    //System.err.println("Caught ThreadDeath exception. Tracing of sample " + i + " was interrupted.");
-                } else {
-                    throw ex;
-                }
-            }
+        //     try {
+        //         Main.invoke(method, p);
+        //     } catch (InvocationTargetException ex) {
+        //         Throwable e = ex.getCause();
+        //         if (e instanceof TraceSizeLimitReached) {
+        //             //System.err.println("Caught ThreadDeath exception. Tracing of sample " + i + " was interrupted.");
+        //         } else {
+        //             throw ex;
+        //         }
+        //     }
 
-        } else if(cmd.hasOption("cegs")) { // If we have a CEGIS loop
+        // } else 
+        if(cmd.hasOption("cegs")) { // If we have a CEGIS loop
             System.out.println("CEGS strategy");
             String argumentsFile = cmd.getOptionValue("cegs");
 
@@ -208,7 +209,10 @@ public class Main {
         } else {
             System.out.println("Other strategies");
             Method method = methods.get(0); //
+            System.out.print("Method ");
+            System.out.println(method);
             Type[] types = method.getGenericParameterTypes();
+            System.out.print("Type[0] ");
             System.out.println(types[0]);
 
             for (int i = 0; i < samples; ++i) {
@@ -216,7 +220,8 @@ public class Main {
                 Object[] p = gen.nextSampleArguments(types);
 
                 for (int j = 0; i < p.length; ++i) {
-                    System.out.println(p[j].getClass());
+                    int k = (Integer) p[j];
+                    System.out.println(k);
                 }
                 
                 try {

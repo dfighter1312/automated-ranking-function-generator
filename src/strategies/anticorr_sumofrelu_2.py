@@ -15,7 +15,7 @@ from utils.print_result import print_result
 processes = psutil.cpu_count(logical=False)
 
 
-def anticorr_sumofrelu_2(jar_file, class_name, method_name, n_trials = 20, overwrite_sampling='pairanticorr', sample_size=1000, seed=None):
+def anticorr_sumofrelu_2(jar_file, class_name, method_name, n_trials = 12, overwrite_sampling='pairanticorr', sample_size=1000, seed=None):
     """Anticorr sumofrelu generator for neural ranking function.
 
     Args:
@@ -26,9 +26,9 @@ def anticorr_sumofrelu_2(jar_file, class_name, method_name, n_trials = 20, overw
         force_sample_size (int, optional): Limit the sample size. Defaults to None.
         seed (int, optional): Torch random seed. Defaults to None.
     """
-    limit = 1000
+    limit = 100
     learning_rate = 0.001
-    n_iterations = 1000
+    n_iterations = 10000
     n_summands = 5
     
     result = {
@@ -61,7 +61,7 @@ def anticorr_sumofrelu_2(jar_file, class_name, method_name, n_trials = 20, overw
                     jar_file=jar_file,
                     class_name=class_name,
                     method_name=method_name,
-                    samples=sample_size * (trial // 5 + 1),
+                    samples=sample_size,
                     limit=limit,
                     loop_offset=loop_heads,
                     tracing_seed=seed,
@@ -81,12 +81,15 @@ def anticorr_sumofrelu_2(jar_file, class_name, method_name, n_trials = 20, overw
                     input_before.append(head_input_before)
                     input_after.append(head_input_after)
                     
+                print(input_before[:5])
+                print(input_after[:5])
+                
                 result['n_pairs'] = list(map(lambda x: x.size()[0], input_before))
 
             model = SumOfRelu2(
                 len(input_vars),
                 n_out=len(loop_heads),
-                n_summands=5,
+                n_summands=1 + trial // 3,
                 trainable_out=True
             )
             model, training_time = train_ranking_function_smrl2(
@@ -112,13 +115,13 @@ def anticorr_sumofrelu_2(jar_file, class_name, method_name, n_trials = 20, overw
             lexiW = []
             lexib = []
             lexiout = []
-            for i in range(0, len(loop_heads)):
+            for i in range(len(loop_heads)):
                 parameters = next(model.fc1[i].parameters()).detach().numpy()
                 result["functions before rounding"] += print_result(parameters, input_vars, f"(Loop header #{i+1}) Hidden layer 1")
                 out_parameters = next(model.fc2[i].parameters()).detach().numpy()
                 result["functions before rounding"] += print_result(out_parameters, input_vars, f"(Loop header #{i+1}) Output layer", var_dependent=False)
                 
-            Ses = [0.5, 1.0]
+            Ses = [0.1, 0.5, 1.]
 
             for S in Ses:
                 print('=' * 40)
@@ -150,10 +153,18 @@ def anticorr_sumofrelu_2(jar_file, class_name, method_name, n_trials = 20, overw
                     for j, e in enumerate(symround):
                         print(f"Branch {j + 1}: {out_round[0, j] * e}")
                         result["functions after rounding"] += [f"Branch {j + 1}: {out_round[0, j] * e}"]
-
+                    
+                    # print("W and W round", W.tolist(), W_round)
+                    # print("b and b round", b.tolist(), b_round)
+                    # print("out and out round", out.tolist(), out_round)
+                    
                     W_to_check.append(W_round)
                     b_to_check.append(b_round)
                     out_to_check.append(out_round)
+                    
+                    # W_to_check.append(W)
+                    # b_to_check.append(b)
+                    # out_to_check.append(out)
 
                 result['decrease'], result['invar'], cex = check_sum_of_relu(jar_file, class_name, method_name,
                                                                             loop_heads, input_vars,

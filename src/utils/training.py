@@ -69,7 +69,8 @@ def train_ranking_function_smrl2(
     n_summands=5
 ):
 
-    optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
+    optimizer = optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=0.0)
+    # scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=1000, gamma=0.5)
     
     print('=' * 100)
     print('- Learning')
@@ -95,6 +96,7 @@ def train_ranking_function_smrl2(
             
         loss.backward()
         optimizer.step()
+        # scheduler.step()
     
     result["n_iterations"] += iteration + 1        
     return model

@@ -87,7 +87,7 @@ def main(args):
             print(colored("{:4} {:50s}\t{:15s}\t{}".format(i, r["class"], r["function"], r["error"]), "yellow"))
             continue
         if "decrease" not in r:
-            print(colored("{:4} {:50s}\t{:15s}".format(i, r["class"], r["function"]), "yellow"))
+            print(colored("{:4} {:50s}\t{:15s}".format(i, r.get("class", ""), r.get("function", "")), "yellow"))
             continue
         if r["decrease"]:
             print(colored("{:4} {:50s}\t{:15s}\t{:8.2f}\t{:8.2f}\t{:8.2f}\t      {}\t    {}".format(i, r["class"], r["function"], r["trace_time"], r["learning_time"], r["wallclock_time"],r["decrease"], r["invar"]), "green"))

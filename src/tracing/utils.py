@@ -108,7 +108,6 @@ def run_tracing(input_program, class_name, method_name, output_file, samples, lo
 
         run_cmd = create_run_command(input_program, class_name, method_name, f.name, sampling_strategy,
                                      samples_per_process, loopheads=loopheads, seed=seed, tracelimit=tracelimit)
-        print(' '.join(run_cmd))
         p = subprocess.Popen(run_cmd, env=environment, stdout=subprocess.PIPE)
         processes.append((f, p))
 
